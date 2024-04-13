@@ -9,6 +9,8 @@ openai = "*"
 tiktoken = "*"
 python-decouple = "*"
 regex = "*"
+redis = "*"
+numpy = "*"
 
 [dev-packages]
 

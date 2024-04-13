@@ -1,0 +1,37 @@
+<p align="center">
+  <a href="" rel="noopener">
+ <img width="80" alt="readme" src="https://www.vhv.rs/dpng/d/219-2192268_samsung-bada-games-free-download-for-wave-chat.png">
+</a>
+</p>
+
+<h3 align="center"> Crunch- Easy to use group chat-app
+    <br>
+</h3>
+
+
+<p>If you’re looking for a simple chat app to meet new people around the world, our chat is for you! Here, nothing is impossible — find new friends, share images, have fun and of course discuss your working projects. With this chat you can meet thousands of people. The Chat app concept is designed with simplicity in mind. Anyone willing to get acquainted and communicate can install it for free and use without limits.</p>
+
+---
+
+## 📝 Table of Contents
+
+- [Future Scope](#future_scope)
+- [Getting Started](#getting_started)
+- [Technology Stack](#tech_stack)
+- [Screenshots](#screenshots)
+- [Authors](#authors)
+- [Acknowledgments](#acknowledgments)
+
+
+## 🚀 Future Scope <a name = "future_scope"></a>
+- Add feature to share audio and document files too.
+- Private chats
+
+
+## 🏁 Getting Started <a name = "getting_started"></a>
+
+- "git clone https://github.com/pri1311/crunch"
+- "cd crunch"
+- "pip install -r requirements.txt"
+- Add your cloudinary credentials to main.py, auth.py and views.py files.
+- "python main.py"

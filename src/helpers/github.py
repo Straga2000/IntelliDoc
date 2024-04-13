@@ -3,10 +3,12 @@ import sys
 import json
 from decouple import config
 import base64
+from storage.redis_store import RedisStore
 
 
 class Github:
     def __init__(self, token=""):
+        self.redis = RedisStore()
         self.token = token
         self.base_url = "https://api.github.com"
 
@@ -18,13 +20,27 @@ class Github:
 
     def get_repo_content(self, rel_path, path=""):
         # extract owner, repo, path from given path
-        print("ceva", rel_path, path)
+        # print("ceva", rel_path, path)
         url = f"{self.base_url}/repos/{rel_path}/contents/{path}"
-        print("dkfjvfdkjn", url)
+
+        value = self.redis.get(url)
+        if value:
+            return value, url
+
+        # print("dkfjvfdkjn", url)
         headers = {'Authorization': f'token {self.token}'} if self else {}
         response = requests.get(url, headers=headers)
+
         response.raise_for_status()
-        return response.json()
+        try:
+            response = response.json()
+        except Exception as e:
+            print("Error on conversion to json of the response")
+            return None
+
+        # add caching support
+        self.redis.set(url, response, ttl=1000 * 30)
+        return response, url
 
     def get_b64_content(self, path):
         headers = {'Authorization': f'token {self.token}'} if self else {}
@@ -34,7 +50,7 @@ class Github:
 
     def fetch_files(self, root_path, file=""):
         all_files = {}
-        for elem in github_api.get_repo_content(root_path, file):
+        for elem, key in self.get_repo_content(root_path, file):
             content_path = f"{self.base_url}/repos/{root_path}/contents/{elem['path']}"
             # print(elem)
             if elem["type"] == "file":
@@ -43,7 +59,7 @@ class Github:
                 # print(f"A response with content type of {response.headers['content-type']}")
                 if response and response.headers["content-type"].find("text") == 0:
                     # pair = (content_path, response.text)
-                    all_files[elem['name']] = response.text
+                    all_files[elem['name']] = {"content": response.text, "key": key}
                     # all_files.append(pair)
                     # print(pair)
                     # content = self.get_b64_content(content_path).get("content")
@@ -78,8 +94,8 @@ if __name__ == "__main__":
     given_url = github_api.get_project(given_url)
 
     tree = github_api.fetch_files(given_url, "")
-    for key in tree:
-        print(key, tree[key])
+    # for key in tree:
+    #     print(key, tree[key])
 
     # print()
     # init_url = f"https://github.com/{given_url}/blob/master"
