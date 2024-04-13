@@ -1,0 +1,42 @@
+@auth.route('/signup', methods=['POST', 'GET'])
+def signup_post():
+    if request.method == 'POST':
+        error = None
+        thumbnail_url1 = None
+        email = request.form.get('email')
+        name = request.form.get('name')
+        password = request.form.get('password')
+        image = request.files['image']
+        if image:
+            upload_result = uploader.upload(image)
+            # image = Cloud.CloudinaryImage(request.form.get('image'))
+            thumbnail_url1, options = cloudinary_url(
+                        upload_result['public_id'],
+                        crop="fill",)
+        else:
+            thumbnail_url1 = 'https://png.pngitem.com/pimgs/s/150-1503945_transparent-user-png-default-user-image-png-png.png'
+
+        if not password or not email or not name:
+            error = "Invalid Credentials. Please try again."
+            return render_template("/auth/login-register.html", error=error)
+
+        if User.query.filter_by(name=name).count() == 1:
+            error = "Name already taken. Please try again."
+            return render_template("/auth/login-register.html", error=error)
+
+        if User.query.filter_by(email=email).count() == 1:
+            error = "Email already taken. Please try again."
+            return render_template("/auth/login-register.html", error=error)
+
+        u = User()
+        u.name = name
+        u.email = email
+        u.image = thumbnail_url1
+        u.set_password(password)
+        session['username'] = name
+        db.session.add(u)
+        db.session.commit()
+
+        return render_template("/auth/login-register.html")
+    else:
+        return render_template("/auth/login-register.html")

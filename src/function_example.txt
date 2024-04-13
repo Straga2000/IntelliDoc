@@ -1,0 +1,5 @@
+def offset(image: Image.Image, xoffset: int, yoffset: int | None = None) -> Image.Image:
+    if yoffset is None:
+        yoffset = xoffset
+    image.load()
+    return image._new(image.im.offset(xoffset, yoffset))
