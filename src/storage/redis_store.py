@@ -12,14 +12,19 @@ class RedisStore:
 
     @classmethod
     def set(cls, key, data_object, ttl=None):
-        data_serialized = dumps(data_object)
-        if ttl:
-            return cls.redis.set(key, data_serialized, ex=ttl)
-        else:
-            return cls.redis.set(key, data_serialized)
+        if redis_instance:
+            data_serialized = dumps(data_object)
+            if ttl:
+                return cls.redis.set(key, data_serialized, ex=ttl)
+            else:
+                return cls.redis.set(key, data_serialized)
+        return None
 
     @classmethod
     def get(cls, key):
+        if not redis_instance:
+            return None
+
         data_serialized = cls.redis.get(key)
         return loads(data_serialized) if data_serialized else None
 
