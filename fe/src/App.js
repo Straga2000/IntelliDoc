@@ -8,7 +8,8 @@ import {
 } from "react-router-dom";
 import About from "./pages/about";
 import ProductDesigner from "./pages/product-designer";
-// import Home from "./pages/Home"
+import Home from "./pages/home"
+import Issues from './components/issues';
 // // ...
 // import About from "./pages/About"
 
@@ -32,6 +33,12 @@ function App() {
         {
             path: "/about",
             element: <About />,
+        },{
+            path: "/home",
+            element: <Home />,
+        },{
+            path: "/issues",
+            element: <Issues />,
         },
         {
             path: "/product-designer",
