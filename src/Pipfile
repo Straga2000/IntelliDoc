@@ -11,6 +11,12 @@ python-decouple = "*"
 regex = "*"
 redis = "*"
 numpy = "*"
+flask = "*"
+flask-cors = "*"
+xmltodict = "*"
+lxml = "*"
+yake = "*"
+spacy = "*"
 
 [dev-packages]
 

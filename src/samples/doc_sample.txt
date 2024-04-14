@@ -1,0 +1,168 @@
+<documentation>
+    <name>sendimage</name>
+    <description>Handles the sending of an image message to the chat.</description>
+    <param>
+        <name>data</name>
+        <description>The data containing the image message.</description>
+    </param>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>handle_message</name>
+    <description>Handles the sending of a text message to the chat.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the text message.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>handle_createWorkspace</name>
+    <description>Handles the creation of a new workspace.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the details of the new workspace.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>handle_createChannel</name>
+    <description>Handles the creation of a new channel within a workspace.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the details of the new channel.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>joinRoom</name>
+    <description>Handles the joining of a room (workspace or channel).</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the details of the room to join.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>sendChannels</name>
+    <description>Handles the sending of the list of channels within a workspace.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the workspace id.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>get_workspaceName</name>
+    <description>Handles the retrieval of the name and joining code of a workspace.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the workspace id.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>chat_msg</name>
+    <description>Handles the sending of a chat message to a channel within a workspace.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the chat message details.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>sendMessages</name>
+    <description>Handles the sending of the list of messages within a channel.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the workspace id and channel id.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>addWorkspace</name>
+    <description>Handles the joining of a workspace by a user.</description>
+    <parameters>
+        <param>
+            <name>data</name>
+            <description>The data containing the workspace details and joining code.</description>
+        </param>
+    </parameters>
+    <return>
+        None
+    </return>
+</documentation>
+
+<documentation>
+    <name>random_string</name>
+    <description>Generates a random string with a specified number of letters and digits.</description>
+    <parameters>
+        <param>
+            <name>letter_count</name>
+            <description>The number of letters in the random string.</description>
+        </param>
+        <param>
+            <name>digit_count</name>
+            <description>The number of digits in the random string.</description>
+        </param>
+    </parameters>
+    <return>
+        str
+    </return>
+</documentation>
+
+<documentation>
+    <name>not_found</name>
+    <description>Handles the 404 and 405 errors.</description>
+    <parameters>
+        <param>
+            <name>e</name>
+            <description>The error object.</description>
+        </param>
+    </parameters>
+    <return>
+        render_template
+    </return>
