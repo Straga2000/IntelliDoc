@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, setState, useEffect, useCallback } from 'react';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Accordion from '@mui/material/Accordion';
@@ -9,6 +9,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Box from '@mui/material/Box';
 import axios from "axios";
 import Input from '@mui/material/Input';
+
 
 const FileAccordion = ({ file }) => (
     <Accordion>
@@ -73,6 +74,25 @@ const Projects = () => {
     const [directoryStructure, setDirectoryStructure] = useState([]);
     const [showAccordion, setShowAccordion] = useState(false);
 
+    const [state, setState] = useState([]);
+    useEffect(() => {
+        let project_list = loadState()?.project_ids
+        project_list = project_list ?? []
+        setState(project_list);
+    }, []);
+
+    const loadState = useCallback( () => {
+        console.log("Load canvas")
+        let state = localStorage.getItem("project_ids")
+        return !!state ? JSON.parse(state) : null;
+    }, [])
+
+    const saveState = useCallback(() => {
+        console.log("Save canvas")
+        let projectDict = JSON.stringify({"project_ids": [...state]})
+        localStorage.setItem("project_ids", projectDict)
+        return true
+    }, [state])
     const extractRepoName = (url) => {
         const match = url.match(/github\.com\/([^\/]+\/[^\/]+)/i);
         return match ? match[1].split('/')[1] : '';
@@ -97,6 +117,8 @@ const Projects = () => {
                     }
                 }
             );
+
+            setState([...state, response.id])
             console.log("API Response:", response.data);
     
             const buildStructure = (data) => {
