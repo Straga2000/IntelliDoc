@@ -70,7 +70,8 @@ if __name__ == "__main__":
 
         return {
             "status": True,
-            "project": new_tree
+            "project": new_tree,
+            "id": project_id
         }
 
 

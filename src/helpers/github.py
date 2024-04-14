@@ -53,7 +53,7 @@ class Github:
             return None, None
 
         # add caching support
-        self.redis.set(url, response, ttl=1000 * 30)
+        self.redis.set(url, response, ttl=1000 * 30 * 30)
         print(response, url)
         return response, url
 
@@ -125,17 +125,17 @@ class Github:
                     "language": get_language(conditions),
                 }
 
-                RedisStore.set(properties_key, properties)
+                RedisStore.set(properties_key, properties, ttl=1000 * 30 * 30)
         except AttributeError as e:
             print("Context too large, we should skip")
             properties = {
                 "code": False,
                 "language": None
             }
-            RedisStore.set(properties_key, properties)
+            RedisStore.set(properties_key, properties, ttl=100 * 30 * 30)
 
         # in any of the cases, tag the file if it's a text file
-
+        properties.update({"tags": self.tag_content(content)})
 
         if properties.get("code") and properties.get("language") == "PYTHON":
             # we should extract the code doc string
@@ -175,7 +175,7 @@ class Github:
             properties.update({
                 "documentation": doc_list
             })
-            RedisStore.set(properties_key, properties)
+            RedisStore.set(properties_key, properties, ttl=1000 * 30 * 30)
 
         return properties
 
@@ -187,6 +187,10 @@ class Github:
             # remove the stop words from the given text for greater quality embeddings and faster outputs
             lemmas = [token.lemma_ for token in doc if not (
                         token.is_punct or token.is_stop or token.like_num or token.like_url or token.like_email or token.is_currency)]
+
+            if len(lemmas) == 0:
+                continue
+
             w_len = w / len(lemmas)
 
             for word in lemmas:

@@ -1,11 +1,14 @@
 import yake
 import spacy
-
+from storage.redis_store import RedisStore
 kw_extractor = yake.KeywordExtractor()
 
-content = None
-with open("./samples/big_sample.txt") as f:
-    content = f.read()
+# content = None
+# with open("./samples/big_sample.txt") as f:
+#     content = f.read()
+#
+
+content = "How should I create a new class that manages the profiles of the user?"
 
 nlp = spacy.load("en_core_web_sm")
 extracted_expr = [(kw, w) for kw, w in kw_extractor.extract_keywords(content)]
@@ -27,3 +30,7 @@ for kw, w in extracted_expr:
 
 wbow = sorted([(k, w / c) for k, (w, c) in wbow.items()], key=lambda x: x[1], reverse=True)
 print(wbow)
+
+# develop an algorithm for optimizing data retrieval
+tree_id = "d05ff527-61ce-42bc-ad0b-439ac5511dde"
+print(RedisStore.get(tree_id))
